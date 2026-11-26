@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>اقتباسات أثر</title>
 <style>
+* { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -13,45 +14,108 @@ body {
   text-align: center;
 }
 header {
-  padding: 35px 15px;
+  padding: 30px 15px;
   background: #29251f;
   color: white;
 }
 main {
   max-width: 650px;
-  margin: 35px auto;
+  margin: 30px auto;
   padding: 20px;
 }
-h1 { margin: 0; }
-.quote {
+.quote, .tools {
   background: white;
-  padding: 35px 20px;
+  padding: 25px 20px;
   border-radius: 15px;
-  font-size: 23px;
-  line-height: 1.8;
+  margin-bottom: 18px;
+  line-height: 1.9;
 }
+.quote { font-size: 23px; }
+h2 { font-size: 19px; }
+p { line-height: 1.8; }
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  margin: 6px;
+  background: #29251f;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover { background: #574638; }
 footer {
-  margin-top: 45px;
   padding: 20px;
   color: #777;
 }
+a { color: #574638; }
 </style>
 </head>
 <body>
+
 <header>
   <h1>اقتباسات أثر 🖤</h1>
   <p>كلمات تترك أثرًا لا يُنسى</p>
 </header>
+
 <main>
   <div class="quote">
-    ليست كل الكلمات تُقال لتُسمع،
-    بعضها يُكتب ليبقى أثره في القلب.
+    <div id="quote">ليست كل الكلمات تُقال لتُسمع، بعضها يُكتب ليبقى أثره في القلب.</div>
+  </div>
+
+  <button onclick="nextQuote()">اقتباس جديد</button>
+
+  <div class="tools">
+    <h2>وصف المنشور</h2>
+    <p id="caption">بعض الكلمات لا تمر مرورًا عابرًا، بل تترك أثرًا في القلب.</p>
+    <button onclick="copyText('caption')">نسخ الوصف</button>
+
+    <h2>الهاشتاجات</h2>
+    <p id="hashtags">#اقتباسات #أثر #حكمة #كلمات</p>
+    <button onclick="copyText('hashtags')">نسخ الهاشتاجات</button>
   </div>
 </main>
+
 <footer>
   © 2026 اقتباسات أثر
   <p><a href="privacy.html">سياسة الخصوصية</a></p>
-<p><a href="terms.html">شروط الاستخدام</a></p>
+  <p><a href="terms.html">شروط الاستخدام</a></p>
 </footer>
+
+<script>
+const quotes = [
+  "ليست كل الكلمات تُقال لتُسمع، بعضها يُكتب ليبقى أثره في القلب.",
+  "ازرع خيرًا ولو في غير موضعه، فالله لا يضيع أجر المحسنين.",
+  "لا تجعل قسوة الأيام تُنسيك جمال قلبك.",
+  "بعض الصمت أبلغ من ألف كلمة.",
+  "الأثر الطيب لا يحتاج إلى ضجيج كي يبقى.",
+  "كن جميل الأثر، فالعمر يمضي والذكرى تبقى.",
+  "ليس النجاح أن تصل وحدك، بل أن تترك أثرًا طيبًا في الطريق.",
+  "كل يوم جديد فرصة لتكون أفضل مما كنت."
+];
+
+let current = 0;
+
+function nextQuote() {
+  current = (current + 1) % quotes.length;
+  document.getElementById("quote").textContent = quotes[current];
+  document.getElementById("caption").textContent =
+    quotes[current] + " ✨";
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).textContent;
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("تم نسخ النص");
+    }).catch(() => {
+      alert("تعذر النسخ، حاول مرة أخرى");
+    });
+  } else {
+    alert("النسخ غير متاح في هذا المتصفح");
+  }
+}
+</script>
+
 </body>
 </html>
